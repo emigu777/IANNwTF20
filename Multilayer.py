@@ -37,4 +37,6 @@ class Multilayerperceptron:
 
         return self.multilayer
 
+#hellooo
+
 
