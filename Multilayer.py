@@ -32,4 +32,9 @@ class Multilayerperceptron:
         """
         Updates the weights and biases of the network
         """
+        for i in range(self.n_layers, 0, -1):
+            self.multilayer[i].backward_step()
+
+        return self.multilayer
+
 
