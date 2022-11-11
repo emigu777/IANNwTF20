@@ -21,7 +21,7 @@ mlp = Multilayerperceptron(1, 2, [10, 1])
 for i in range(1000):
     for input in x:
         predicted = mlp.forward_step[input]
-        mlp.backpropagation((predicted - t[input]))
+        mlp.backpropagation((predicted - t[input]), 0.02)
         loss.append(1/2 * np.square((predicted - t[input])))
 
 lossarray = np.array(loss)
