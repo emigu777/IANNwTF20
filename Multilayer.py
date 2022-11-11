@@ -10,7 +10,7 @@ class Multilayerperceptron:
         Constructs a multilayerperceptron 
 
             Args: 
-            input(array): the perceptrons input
+            in_units(int): number of input units
             n_layers(int): number of layers
             n_units(array): number of units per layer
         """
@@ -36,12 +36,19 @@ class Multilayerperceptron:
     def backpropagation(self, error):
         """
         Updates the weights and biases of the network
+
+        Args:
+            error: derivative of loss function
+
+        Returns the updated MLP
         """
         for count, layer in enumerate(self.multilayer.reverse()):
+            # The last layer takes the derivative of the loss function as the error signal
             if count == 0:
                 self.backward[count] = layer.backward_step(error)
+            #all other layers get their error signal from the layer before 
             else: 
-                self.backward[count] = layer.backward_step(self.backward[count - 1] * layer.weights)
+                self.backward[count] = layer.backward_step(self.backward[count - 1])
 
         return self.multilayer
 

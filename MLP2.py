@@ -11,6 +11,7 @@ for i in range(len(x)):
 
 loss = []
 
+#plotting data points
 plt.plot(x, t, 'bo')
 plt.show()
 
