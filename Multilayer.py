@@ -1,5 +1,7 @@
-import numpy as np 
+import numpy as np
+
 import Layers
+
 
 class Multilayerperceptron:
 
@@ -22,21 +24,26 @@ class Multilayerperceptron:
     def forward_step(self):
         """
         Propagates the input through the layers
+
+        Returns: 
+                The predicted output of the MLP given the input 
         """
         self.output = self.multilayer[0].forward_step(self.input)
         for i in range(self.n_layers):
             self.output = self.multilayer[i].forward_step(self.output)
         return self.output 
 
-    def backpropagation(self):
+    def backpropagation(self, loss):
         """
         Updates the weights and biases of the network
         """
-        for i in range(self.n_layers, 0, -1):
-            self.multilayer[i].backward_step()
+        for count, layer in enumerate(self.multilayer.reverse()):
+            if count == 0:
+                self.backward[count] = layer.backward_step(loss)
+            else: 
+                self.backward[count] = layer.backward_step(self.backward[count - 1] * layer.weights)
 
         return self.multilayer
 
-#hellooo
 
 
