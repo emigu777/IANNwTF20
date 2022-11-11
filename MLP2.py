@@ -10,19 +10,20 @@ for i in range(len(x)):
     t[i] = x[i]**3-x[i]**2
 
 loss = []
+n = 5  #learning rate 
 
 #plotting data points
 plt.plot(x, t, 'bo')
-#plt.show()
+plt.show()
 
 
 mlp = Multilayerperceptron(1, 2, [10, 1])
 
 for i in range(1000):
-    for input in x:
-        predicted = mlp.forward_step(input)
-        mlp.backpropagation((predicted - t[input]), 0.02)
-        loss.append(1/2 * np.square((predicted - t[input])))
+    for input in range(len(x)):
+        predicted = mlp.forward_step(x[input])
+        mlp.backpropagation((predicted - t[input]), n)
+        loss.append(1/2 * np.square(predicted - t[input]))
 
 lossarray = np.array(loss)
 average = np.average(lossarray.reshape(-1, 100), axis = 1)

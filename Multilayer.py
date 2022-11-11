@@ -14,7 +14,8 @@ class Multilayerperceptron:
             n_layers(int): number of layers
             n_units(array): number of units per layer
         """
-        self.n_layers = n_layers                                            
+        self.n_layers = n_layers
+        self.backward = []                                            
         self.multilayer = []
         self.multilayer.append(Layers.Layer(n_units[0], in_units))
         for i in range(1, n_layers):
@@ -42,13 +43,13 @@ class Multilayerperceptron:
 
         Returns the updated MLP
         """
-        for count, layer in enumerate(self.multilayer.reverse()):
+        for count, layer in enumerate(reversed(self.multilayer)):
             # The last layer takes the derivative of the loss function as the error signal
             if count == 0:
-                self.backward[count] = layer.backward_step(error, n)
+                self.backward.append(layer.backward_step(error, n))
             #all other layers get their error signal from the layer before 
             else: 
-                self.backward[count] = layer.backward_step(self.backward[count - 1], n)
+                self.backward.append(layer.backward_step(self.backward[count - 1], n))
 
         return self.multilayer
 

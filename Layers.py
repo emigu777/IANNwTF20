@@ -19,8 +19,7 @@ class Layer:
     def forward_step(self, input):
         self.input = input
         self.preactivation = np.dot(self.input, self.weights) #multiply weights matrix with input array and safe results to preactivation array
-        #self.preactivation = self.preactivation.ravel()
-        print(self.preactivation)
+        self.preactivation = self.preactivation.ravel()
         
         for i in range(self.n_units):
             self.preactivation[i] += self.bias[i]              #add biases to each preactivation to get final preactivation
@@ -43,10 +42,9 @@ class Layer:
 
         #updating the parameters with θnew = θold − η∇θL
         for i in range(self.n_units):
-            self.bias[i] -= n * self.dLbydb[i]
+            self.bias[i] -= (n * self.dLbydb[i])
             for j in range(self.input_units):
-                self.weights[j][i] -= n * self.dLbydW[j][i]
-
+                self.weights[j][i] -= (n * self.dLbydW[j][i])
         return(self.error_signal_for_n_minus_one)
 
 
