@@ -29,4 +29,5 @@ plt.plot(range(1000), average, color='green', marker='o')
 plt.title("Training Progress")
 plt.xlabel('epochs')
 plt.ylabel('average loss')
+plt.show()
 
