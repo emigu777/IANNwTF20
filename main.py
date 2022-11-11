@@ -10,7 +10,7 @@ for i in range(len(x)):
     t[i] = x[i]**3-x[i]**2
 
 loss = []
-n = 5  #learning rate 
+n = 0.02  #learning rate 
 
 #plotting data points
 plt.plot(x, t, 'bo')
