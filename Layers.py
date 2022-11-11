@@ -1,6 +1,6 @@
 import numpy as np
 
-class layer:
+class Layer:
 
     def __init__(self, n_units, input_units):       #constructor
         self.n_units = int(n_units)                 #number of units in layer
@@ -18,7 +18,10 @@ class layer:
 
     def forward_step(self, input):
         self.input = input
-        self.preactivation = np.dot(self.input, self.weights)  #multiply weights matrix with input array and safe results to preactivation array
+        self.preactivation = np.dot(self.input, self.weights) #multiply weights matrix with input array and safe results to preactivation array
+        #self.preactivation = self.preactivation.ravel()
+        print(self.preactivation)
+        
         for i in range(self.n_units):
             self.preactivation[i] += self.bias[i]              #add biases to each preactivation to get final preactivation
             self.activation[i] = np.maximum(0, self.preactivation[i])   #ReLu (preactivation) = activation
