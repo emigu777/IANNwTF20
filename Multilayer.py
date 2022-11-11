@@ -33,13 +33,13 @@ class Multilayerperceptron:
             self.output = self.multilayer[i].forward_step(self.output)
         return self.output 
 
-    def backpropagation(self, loss):
+    def backpropagation(self, error):
         """
         Updates the weights and biases of the network
         """
         for count, layer in enumerate(self.multilayer.reverse()):
             if count == 0:
-                self.backward[count] = layer.backward_step(loss)
+                self.backward[count] = layer.backward_step(error)
             else: 
                 self.backward[count] = layer.backward_step(self.backward[count - 1] * layer.weights)
 
