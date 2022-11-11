@@ -1,6 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt 
-import Layers
+from Multilayer import Multilayerperceptron
 
 #creating random input values
 x = np.random.rand(100)
@@ -13,3 +13,8 @@ plt.plot(x, t, 'bo')
 plt.show()
 
 
+mlp = Multilayerperceptron(1, 2, [10, 1])
+
+for i in range(1000):
+    for input in x:
+        mlp
