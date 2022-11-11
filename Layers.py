@@ -44,11 +44,13 @@ class layer:
         self.error_signal_for_n_minus_one = np.dot(self.weights, self.dLbydd)
 
         #dL/dW(n) is calculated by dL/dd * input
+        #-----the input needs to be transposed so that we get the 2dimensional matrix dL/dW.
         #self.input = np.asarray(self.input)
         print('dLbydd: ')
         print(self.dLbydd)
         print(self.input)
-        self.dLbydW = np.dot(self.input, self.dLbydd)
+        #self.dLbydW = self.input.T * self.dLbydd       -> this is not working
+        #self.dLbydW = np.dot(self.input, self.dLbydd)
 
 
     
