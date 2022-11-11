@@ -1,6 +1,6 @@
 import numpy as np
 
-n = 0.02 #learning rate
+n = 0.05 #learning rate
 
 class layer:
 
@@ -17,7 +17,6 @@ class layer:
         self.error_signal_for_n_minus_one = np.empty(self.input_units) #array to safe dLbyda(n-1) the signal will be given to layer n-1
         self.dLbydb = np.empty(self.n_units)            #array to safe dL/db(n)
         self.dLbydW = np.empty((self.input_units, self.n_units)) #dLbydW(n) matrix for the gradients of the weights
-        self.lastlayer = False                      #our layer is not the last one unless we say self.lastlayer = True
 
     def forward_step(self, input):
         self.input = input
@@ -29,20 +28,13 @@ class layer:
 
     def backward_step(self, error_signal):          #the error signal is the gradient dL/da which the layer gets from the layer n+1
         self.error_signal = error_signal
-        if self.lastlayer == True:                  #in the last layer the error signal still needs to be calculated with the target, the error signal given when calling the method is the target
-            for i in range(self.n_units):
-                if self.preactivation[i] <= 0:      #ReLu'(preactivation) becomes zero for smaller than zero and one if else
-                    self.dLbydb[i] = 0
-                else:
-                    self.dLbydb[i] = self.activation[i] - self.error_signal[i] #activation - target is dL/dactivation, the derivative of the loss function with regard to the activation. All this times one (because of ReLu') becomes dL/db
-        else:                                       #the case for every layer but the last one
-            for i in range(self.n_units):
-                if self.preactivation[i] <= 0:
-                    self.dLbydb[i] = 0              #ReLu' becomes zero when the preactivation is <= 0
-                else:
-                    self.dLbydb[i] = self.error_signal[i]
+        for i in range(self.n_units):
+            if self.preactivation[i] <= 0:
+                self.dLbydb[i] = 0              #ReLu' becomes zero when the preactivation is <= 0
+            else:
+                self.dLbydb[i] = self.error_signal[i]
 
-        #now dd(n)/da(n-1) = weights is multiplied with dL/dd(n) to get dL/da(n-1) which is the new error signal given to layer n-1
+        # dd(n)/da(n-1) = weights are multiplied with dL/dd(n) to get dL/da(n-1) which is the new error signal given to layer n-1
         self.error_signal_for_n_minus_one = np.dot(self.weights, self.dLbydb)
 
         #dL/dW(n) is calculated by dL/dd * input
@@ -53,6 +45,8 @@ class layer:
             self.bias[i] -= n * self.dLbydb[i]
             for j in range(self.input_units):
                 self.weights[j][i] -= n * self.dLbydW[j][i]
+
+        return(self.error_signal_for_n_minus_one)
 
 
     
