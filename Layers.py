@@ -1,7 +1,5 @@
 import numpy as np
 
-n = 0.05 #learning rate
-
 class layer:
 
     def __init__(self, n_units, input_units):       #constructor
@@ -26,11 +24,11 @@ class layer:
             self.activation[i] = np.maximum(0, self.preactivation[i])   #ReLu (preactivation) = activation
         return self.activation
 
-    def backward_step(self, error_signal):          #the error signal is the gradient dL/da which the layer gets from the layer n+1
-        self.error_signal = error_signal
+    def backward_step(self, error_signal, n):          #n is the learning rate
+        self.error_signal = error_signal               #the error signal is the gradient dL/da which the layer gets from the layer n+1
         for i in range(self.n_units):
             if self.preactivation[i] <= 0:
-                self.dLbydb[i] = 0              #ReLu' becomes zero when the preactivation is <= 0
+                self.dLbydb[i] = 0                     #ReLu' becomes zero when the preactivation is <= 0
             else:
                 self.dLbydb[i] = self.error_signal[i]
 
@@ -48,27 +46,4 @@ class layer:
 
         return(self.error_signal_for_n_minus_one)
 
-
-    
-
-
-
-l1 = layer(4, 5)
-#print(l1.bias)
-#print(l1.weights)
-l1.forward_step([1, 1, 0, 0, 0])
-#print(l1.input)
-#print(l1.preactivation)
-#print(l1.activation)
-#l1.lastlayer = True
-print(l1.weights)
-print(l1.bias)
-l1.backward_step([1, 1, 1, 2])
-print(l1.weights)
-print(l1.bias)
-#print(l1.error_signal)
-#print(l1.dLbydb)
-#print(l1.error_signal_for_n_minus_one)
-#print('dL/dW:')
-#print(l1.dLbydW)
 
