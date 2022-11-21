@@ -1,2 +1,2 @@
 # IANNwTF20
-IANNwTF Group 20 
+Homework folder of Group 20
